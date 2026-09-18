@@ -42,19 +42,6 @@ Cada bloque se apoya en el anterior: primero se aprende a manejar datos "a mano"
 
 ---
 
-## Prácticas del curso
-
-| Práctica | Bloque / Temas | Tarea |
-|----------|-----------------|-------|
-| Práctica 1 | Bloque 1 (temas 1-2) | Desarrollo de una aplicación de escritorio con gestión de archivos |
-| Práctica 2 | Bloque 1 (tema 3) | Mejora de manejo de excepciones en el análisis de XML |
-| Práctica 3 | Bloque 2 (tema 4) | Conexión JDBC y consulta SQL |
-| Práctica 4 | Bloque 2 (tema 5) | Aplicación Spring Boot con base de datos embebida H2 |
-| Práctica 5 | Bloque 2 (tema 6) | Ejecución de consultas y manipulación de datos en SQL |
-| Práctica 6 | Bloque 3 (temas 7-8) | Mapeo objeto relacional y exploración: Hibernate + HQL |
-
----
-
 ## Estructura de cada bloque
 
 - **apuntes.md** — Resumen teórico de cada tema, con diagramas y tablas comparativas.

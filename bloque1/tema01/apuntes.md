@@ -111,6 +111,7 @@ try {
 | `exists()` | Comprueba si el fichero existe |
 | `canRead()` / `canWrite()` | Comprueban si puede leerse / escribirse |
 | `listFiles()` | Devuelve un array con los ficheros del directorio |
+| `lastModified()` | Devuelve última modificación |
 
 ---
 

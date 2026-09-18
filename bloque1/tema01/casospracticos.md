@@ -36,25 +36,22 @@ import java.io.File;
 public class Ejemplo2 {
 
     public static void main(String[] args) {
-        try {
-            File ficheroOrigen = new File(".\\TEMA01\\Ejemplos\\crearFichero.txt");
-            String nombreCarpeta = "Backup";
-            File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
-            carpeta.mkdirs();
+       
+        File ficheroOrigen = new File(".\\TEMA01\\Ejemplos\\crearFichero.txt");
+        String nombreCarpeta = "Backup";
+        File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
+        carpeta.mkdirs();
 
-            File ficheroDestino = new File(".\\TEMA01\\Ejemplos\\Backup\\fichero_movido.txt");
-            if (ficheroOrigen.renameTo(ficheroDestino))
-                System.out.println("El fichero se movió correctamente");
-            else
-                System.out.println("El fichero no pudo moverse");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        File ficheroDestino = new File(".\\TEMA01\\Ejemplos\\Backup\\fichero_movido.txt");
+        if (ficheroOrigen.renameTo(ficheroDestino))
+            System.out.println("El fichero se movió correctamente");
+        else
+            System.out.println("El fichero no pudo moverse");
     }
 }
 ```
 
-> 💡 Antes de mover, se crea el directorio destino con `mkdirs()`. Recuerda: `renameTo()` falla silenciosamente (devuelve `false`, no lanza excepción) si la ruta destino no existe.
+> 💡 Antes de mover, se crea el directorio destino con `mkdirs()`. Recuerda que `mkdirs()` y  `renameTo()` fallan silenciosamente (devuelve `false`, no lanza excepción) si la ruta destino no existe.
 
 ### Ejemplo 3 — Crear una carpeta si no existe
 
@@ -66,20 +63,18 @@ import java.io.File;
 public class Ejemplo3 {
 
     public static void main(String[] args) {
-        try {
-            String nombreCarpeta = "NuevaCarpeta";
-            File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
+        
+        String nombreCarpeta = "NuevaCarpeta";
+        File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
 
-            if (carpeta.exists())
-                System.out.println("La carpeta " + carpeta.getName() + " ya existe");
-            else {
-                carpeta.mkdirs();
-                System.out.println("La carpeta " + carpeta.getName() + " se ha creado");
-                System.out.println("Ruta absoluta " + carpeta.getAbsolutePath());
-                System.out.println("Ruta relativa " + carpeta.getPath());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (carpeta.exists())
+            System.out.println("La carpeta " + carpeta.getName() + " ya existe");
+        else {
+            carpeta.mkdirs();
+            System.out.println("La carpeta " + carpeta.getName() + " se ha creado");
+            System.out.println("Ruta absoluta " + carpeta.getAbsolutePath());
+            System.out.println("Ruta relativa " + carpeta.getPath());
+            System.out.println("Carpeta padre " + carpeta.getParent());
         }
     }
 }
@@ -89,7 +84,7 @@ public class Ejemplo3 {
 
 Fichero de entrada `texto.txt`:
 ```
-123456789ñABCDEF
+123456789ABCDEF
 ```
 
 ```java
@@ -128,8 +123,6 @@ public class Ejemplo4 {
     }
 }
 ```
-
-> ⚠️ **Punto interesante para clase:** al ejecutar este ejemplo, el fichero `textow.txt` resultante puede mostrar la "á" final como un carácter extraño (`�`) en lugar de "á". Es el ejemplo real de lo que comentamos sobre bytes vs. caracteres: si el editor con el que abres luego el fichero no usa la misma codificación con la que `FileWriter` escribió (el *charset* por defecto de la plataforma), los caracteres multibyte se ven mal aunque el código sea correcto. Buen momento para preguntar en clase: *"¿por qué la 'á' sale bien en consola pero mal en el fichero?"*
 
 ### Ejemplo 5 — Lectura y escritura con bytes (`FileInputStream` / `FileOutputStream`)
 
