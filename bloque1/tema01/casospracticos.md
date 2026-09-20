@@ -13,7 +13,7 @@ public class Ejemplo1 {
 
     public static void main(String[] args) {
         try {
-            File fichero = new File(".\\TEMA01\\Ejemplos\\crearFichero.txt");
+            File fichero = new File(".\\TEMA01\\crearFichero.txt");
             if (fichero.createNewFile()) {
                 System.out.println("Fichero creado: " + fichero.getName());
             } else {
@@ -37,9 +37,9 @@ public class Ejemplo2 {
 
     public static void main(String[] args) {
        
-        File ficheroOrigen = new File(".\\TEMA01\\Ejemplos\\crearFichero.txt");
+        File ficheroOrigen = new File(".\\TEMA01\\crearFichero.txt");
         String nombreCarpeta = "Backup";
-        File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
+        File carpeta = new File(".\\TEMA01", nombreCarpeta);
         carpeta.mkdirs();
 
         File ficheroDestino = new File(".\\TEMA01\\Ejemplos\\Backup\\fichero_movido.txt");
@@ -65,7 +65,7 @@ public class Ejemplo3 {
     public static void main(String[] args) {
         
         String nombreCarpeta = "NuevaCarpeta";
-        File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
+        File carpeta = new File(".\\TEMA01", nombreCarpeta);
 
         if (carpeta.exists())
             System.out.println("La carpeta " + carpeta.getName() + " ya existe");
@@ -87,6 +87,13 @@ Fichero de entrada `texto.txt`:
 123456789ABCDEF
 ```
 
+//Ejemplo: uso de FileReader y FileWriter
+//NOTA: aquí la lectura y la escritura son dos operaciones INDEPENDIENTES,
+//sobre archivos distintos y sin relación entre sí (se lee "texto.txt" y,
+//por separado, se escribe un String fijo en "textow.txt").
+//Si el objetivo fuera COPIAR el contenido de un fichero a otro,
+//habría que leer y escribir dentro del MISMO bucle while.
+
 ```java
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -97,8 +104,8 @@ public class Ejemplo4 {
 
     public static void main(String[] args) {
 
-        String path = "./TEMA01/Ejemplos/texto.txt";
-        String pathEscritura = "./TEMA01/Ejemplos/textow.txt";
+        String path = "./TEMA01/texto.txt";
+        String pathEscritura = "./TEMA01/textow.txt";
 
         try {
             FileReader fr = new FileReader(path);
@@ -114,7 +121,7 @@ public class Ejemplo4 {
 
         try {
             FileWriter fw = new FileWriter(pathEscritura);
-            fw.write("Esto es un ejemplo de escriturá");
+            fw.write("Esto es un ejemplo de escritura");
             fw.close();
             System.out.println("Fichero escrito correctamente.");
         } catch (Exception e) {
@@ -125,6 +132,11 @@ public class Ejemplo4 {
 ```
 
 ### Ejemplo 5 — Lectura y escritura con bytes (`FileInputStream` / `FileOutputStream`)
+
+Fichero de entrada `texto.txt`:
+```
+123456789ABCDEF
+```
 
 ```java
 import java.io.FileInputStream;
@@ -138,8 +150,8 @@ public class Ejemplo5 {
 
     public static void main(String[] args) {
 
-        String path = "./TEMA01/Ejemplos/texto.txt";
-        String pathEscritura = "./TEMA01/Ejemplos/textow.txt";
+        String path = "./TEMA01/texto.txt";
+        String pathEscritura = "./TEMA01/textow.txt";
 
         try {
             FileInputStream entrada = new FileInputStream(path);
@@ -153,8 +165,15 @@ public class Ejemplo5 {
         }
 
         try {
-            String cadena = "Esto es una prueba de escriturá";
+            String cadena = "Esto es una prueba de escritura";
             byte[] arrayBytes = cadena.getBytes();
+
+            /*
+            Nota 💡: si en vez de un String estuviéramos copiando otro fichero (como una imagen),
+            NO haría falta este paso, porque fis.read() ya nos da directamente el byte (int),
+            y output.write(data) lo acepta tal cual, sin necesitar ningún getBytes().
+            getBytes() solo hace falta cuando el ORIGEN de los datos es un String en memoria.
+            */
 
             FileOutputStream output = new FileOutputStream(pathEscritura);
             output.write(arrayBytes);
