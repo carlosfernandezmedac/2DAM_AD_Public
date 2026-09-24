@@ -13,7 +13,7 @@ public class Ejemplo1 {
 
     public static void main(String[] args) {
         try {
-            File fichero = new File(".\\TEMA01\\crearFichero.txt");
+            File fichero = new File(".\\TEMA01\\Ejemplos\\crearFichero.txt");
             if (fichero.createNewFile()) {
                 System.out.println("Fichero creado: " + fichero.getName());
             } else {
@@ -36,22 +36,25 @@ import java.io.File;
 public class Ejemplo2 {
 
     public static void main(String[] args) {
-       
-        File ficheroOrigen = new File(".\\TEMA01\\crearFichero.txt");
-        String nombreCarpeta = "Backup";
-        File carpeta = new File(".\\TEMA01", nombreCarpeta);
-        carpeta.mkdirs();
+        try {
+            File ficheroOrigen = new File(".\\TEMA01\\Ejemplos\\crearFichero.txt");
+            String nombreCarpeta = "Backup";
+            File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
+            carpeta.mkdirs();
 
-        File ficheroDestino = new File(".\\TEMA01\\Ejemplos\\Backup\\fichero_movido.txt");
-        if (ficheroOrigen.renameTo(ficheroDestino))
-            System.out.println("El fichero se movió correctamente");
-        else
-            System.out.println("El fichero no pudo moverse");
+            File ficheroDestino = new File(".\\TEMA01\\Ejemplos\\Backup\\fichero_movido.txt");
+            if (ficheroOrigen.renameTo(ficheroDestino))
+                System.out.println("El fichero se movió correctamente");
+            else
+                System.out.println("El fichero no pudo moverse");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 ```
 
-> 💡 Antes de mover, se crea el directorio destino con `mkdirs()`. Recuerda que `mkdirs()` y  `renameTo()` fallan silenciosamente (devuelve `false`, no lanza excepción) si la ruta destino no existe.
+> 💡 Antes de mover, se crea el directorio destino con `mkdirs()`. Recuerda: `renameTo()` falla silenciosamente (devuelve `false`, no lanza excepción) si la ruta destino no existe.
 
 ### Ejemplo 3 — Crear una carpeta si no existe
 
@@ -63,18 +66,20 @@ import java.io.File;
 public class Ejemplo3 {
 
     public static void main(String[] args) {
-        
-        String nombreCarpeta = "NuevaCarpeta";
-        File carpeta = new File(".\\TEMA01", nombreCarpeta);
+        try {
+            String nombreCarpeta = "NuevaCarpeta";
+            File carpeta = new File(".\\TEMA01\\Ejemplos", nombreCarpeta);
 
-        if (carpeta.exists())
-            System.out.println("La carpeta " + carpeta.getName() + " ya existe");
-        else {
-            carpeta.mkdirs();
-            System.out.println("La carpeta " + carpeta.getName() + " se ha creado");
-            System.out.println("Ruta absoluta " + carpeta.getAbsolutePath());
-            System.out.println("Ruta relativa " + carpeta.getPath());
-            System.out.println("Carpeta padre " + carpeta.getParent());
+            if (carpeta.exists())
+                System.out.println("La carpeta " + carpeta.getName() + " ya existe");
+            else {
+                carpeta.mkdirs();
+                System.out.println("La carpeta " + carpeta.getName() + " se ha creado");
+                System.out.println("Ruta absoluta " + carpeta.getAbsolutePath());
+                System.out.println("Ruta relativa " + carpeta.getPath());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
@@ -87,6 +92,11 @@ Fichero de entrada `texto.txt`:
 123456789ABCDEF
 ```
 
+
+```java
+import java.io.FileReader;
+import java.io.FileWriter;
+
 //Ejemplo: uso de FileReader y FileWriter
 //NOTA: aquí la lectura y la escritura son dos operaciones INDEPENDIENTES,
 //sobre archivos distintos y sin relación entre sí (se lee "texto.txt" y,
@@ -94,21 +104,16 @@ Fichero de entrada `texto.txt`:
 //Si el objetivo fuera COPIAR el contenido de un fichero a otro,
 //habría que leer y escribir dentro del MISMO bucle while.
 
-```java
-import java.io.FileReader;
-import java.io.FileWriter;
-
-//Ejemplo: uso de FileReader y FileWriter
-
 public class Ejemplo4 {
 
     public static void main(String[] args) {
 
-        String path = "./TEMA01/texto.txt";
-        String pathEscritura = "./TEMA01/textow.txt";
+        String path = "./TEMA01/Ejemplos/texto.txt";
+        String pathEscritura = "./TEMA01/Ejemplos/textow.txt";
 
         try {
-            FileReader fr = new FileReader(path);
+            //FileReader fr = new FileReader(path);
+            InputStreamReader fr = new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8);
             int data;
             while ((data = fr.read()) != -1) {
                 System.out.print((char) data);
@@ -120,7 +125,8 @@ public class Ejemplo4 {
         }
 
         try {
-            FileWriter fw = new FileWriter(pathEscritura);
+            //FileWriter fw = new FileWriter(pathEscritura);
+            FileWriter fw = new FileWriter(pathEscritura, StandardCharsets.UTF_8);
             fw.write("Esto es un ejemplo de escritura");
             fw.close();
             System.out.println("Fichero escrito correctamente.");
@@ -130,6 +136,8 @@ public class Ejemplo4 {
     }
 }
 ```
+
+> ⚠️ **Punto interesante para clase:** al ejecutar este ejemplo, el fichero `textow.txt` resultante puede mostrar la "á" final como un carácter extraño (` `) en lugar de "á". Es el ejemplo real de lo que comentamos sobre bytes vs. caracteres: si el editor con el que abres luego el fichero no usa la misma codificación con la que `FileWriter` escribió (el *charset* por defecto de la plataforma), los caracteres multibyte se ven mal aunque el código sea correcto. 
 
 ### Ejemplo 5 — Lectura y escritura con bytes (`FileInputStream` / `FileOutputStream`)
 
@@ -150,8 +158,8 @@ public class Ejemplo5 {
 
     public static void main(String[] args) {
 
-        String path = "./TEMA01/texto.txt";
-        String pathEscritura = "./TEMA01/textow.txt";
+        String path = "./TEMA01/Ejemplos/texto.txt";
+        String pathEscritura = "./TEMA01/Ejemplos/textow.txt";
 
         try {
             FileInputStream entrada = new FileInputStream(path);
@@ -165,7 +173,7 @@ public class Ejemplo5 {
         }
 
         try {
-            String cadena = "Esto es una prueba de escritura";
+            String cadena = "Esto es una prueba de escriturá";
             byte[] arrayBytes = cadena.getBytes();
 
             /*
@@ -201,7 +209,7 @@ public class Ejemplo6 {
 
     public static void main(String[] args) {
 
-        try {
+          try {
             RandomAccessFile file = new RandomAccessFile("./tema1/texto.txt", "rw");
             file.seek(5);
             long filePointer = file.getFilePointer();
@@ -219,9 +227,52 @@ public class Ejemplo6 {
 }
 ```
 
-> ⚠️ **Cuidado con esta trampa habitual:** `seek(5)` posiciona el puntero en el byte 5 (el carácter `'6'`, contando desde 0 en `123456789ABCDEF`). Pero justo después se hace `read()`, que **también mueve el puntero** una posición hacia delante. Por eso el `write('X')` no sobrescribe el byte 5, sino el **byte 6** (el carácter `'7'`). 
+> ⚠️ **Cuidado con esta trampa habitual:** `seek(5)` posiciona el puntero en el byte 5 (el carácter `'6'`, contando desde 0 en `123456789ABCDEF`). Pero justo después se hace `read()`, que **también mueve el puntero** una posición hacia delante. Por eso el `write('X')` no sobrescribe el byte 5, sino el **byte 6** (el carácter `'7'`). Es un buen ejercicio para que el alumnado prediga el contenido final del fichero antes de ejecutarlo.
 
-### Ejemplo 7 — Operaciones con buffer
+
+### Ejemplo 7 - Acceso aleatorio (Lectura de un bloque desde una posición concreta)
+
+
+```java
+import java.io.RandomAccessFile;
+
+//Ejemplo de acceso aleatorio o directo
+
+public class Ejemplo7 {
+
+    public static void main(String[] args) {
+
+        try {
+            RandomAccessFile file = new RandomAccessFile("./tema1/texto.txt", "r");
+
+            file.seek(5); // saltamos directamente a la posición 5, sin leer lo anterior
+
+            byte[] arrayBytes = new byte[5]; //declaras array de bytes de 5 posiciones
+            file.read(arrayBytes, 0, 5);  // leemos 5 bytes de golpe, desde ahí
+
+            System.out.println("Bytes leídos: " + arrayBytes.length);
+            System.out.println("Puntero DESPUÉS del read: " + file.getFilePointer());
+
+            System.out.println("\nArray DESPUÉS de leer (ya relleno con datos del fichero):");
+            for (int i = 0; i < arrayBytes.length; i++) {
+
+                System.out.println("  arrayBytes[" + i + "] = " + arrayBytes[i] + " -> '" + (char) arrayBytes[i] + "'");
+            }
+
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}  
+
+```
+
+`read(array, posicionInicial, tamaño)` llena el array indicado y devuelve cuántos bytes se han leído realmente — combinado con `seek()`, permite saltar directamente a cualquier punto del fichero y leer un bloque completo desde ahí, sin pasar por lo anterior.
+
+
+
+### Ejemplo 8 — Operaciones con buffer
 
 ```java
 import java.io.BufferedInputStream;
