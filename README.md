@@ -42,12 +42,11 @@ Cada bloque se apoya en el anterior: primero se aprende a manejar datos "a mano"
 
 ---
 
-## Estructura de cada bloque
+## Estructura de cada tema
 
-- **apuntes.md** — Resumen teórico de cada tema, con diagramas y tablas comparativas.
-- **casospracticos.md** — Ejemplos guiados y casos prácticos, con su resolución.
+- **apuntes.md** — Resumen teórico/práctico de cada tema.
+- **casospracticos.md** — Casos prácticos con su resolución y explicados en clase.
 - **ejercicios.md** — Ejercicios para practicar de forma autónoma y corregir en clase.
-
 ---
 
 ## Herramientas

@@ -147,7 +147,7 @@ ACCESO SECUENCIAL                    ACCESO ALEATORIO (DIRECTO)
 ### Lectura — `FileInputStream`
 
 ```java
-InputStream entrada = new FileInputStream("C:\\temp\\pruebas\\pruebas2.txt");
+FileInputStream entrada = new FileInputStream("C:\\temp\\pruebas\\pruebas2.txt");
 int data = entrada.read();   // devuelve el primer byte (como entero)
 entrada.close();
 ```
@@ -159,7 +159,7 @@ El método `read()` devuelve el byte leído como `int`. Cuando llega al final de
 ```java
 String cadena = "Esto es una prueba de escritura";
 byte[] arrayBytes = cadena.getBytes();
-
+//getBytes() solo hace falta cuando el ORIGEN de los datos es un String en memoria.
 FileOutputStream output = new FileOutputStream("C:\\temp\\pruebas\\pruebas2.txt");
 output.write(arrayBytes);
 output.close();
@@ -176,7 +176,7 @@ output.close();
 ### Lectura — `FileReader`
 
 ```java
-Reader lector = new FileReader("C:\\temp\\pruebas\\pruebas2.txt");
+FileReader lector = new FileReader("C:\\temp\\pruebas\\pruebas2.txt");
 int data = lector.read();
 System.out.println((char) data);
 lector.close();
@@ -187,12 +187,18 @@ Como `read()` devuelve un `int`, hay que hacer *casting* a `char` para visualiza
 ### Escritura — `FileWriter`
 
 ```java
-Writer escritorFicheros = new FileWriter("C:\\temp\\pruebas\\pruebas2.txt");
+FileWriter escritorFicheros = new FileWriter("C:\\temp\\pruebas\\pruebas2.txt");
 escritorFicheros.write("Esto es un ejemplo de escritura");
 escritorFicheros.close();
 ```
 
 Si el fichero no existe, `FileWriter` lo crea automáticamente. Si existe, **lo sobrescribe**.
+
+```java
+FileWriter w = new FileWriter("datos.txt", true); // el "true" indica modo append
+w.write("Esto se añade al final, sin borrar lo que ya había");
+w.close();
+```
 
 ---
 

@@ -8,10 +8,4 @@
 - [**Tema 2:** Flujos](tema02/apuntes.md)
 - [**Tema 3:** Trabajo con ficheros XML](tema03/apuntes.md)
 
----
 
-## Estructura del Bloque
-
-- **apuntes.md** — Resumen teórico de cada tema.
-- **cp.md** — Casos prácticos del libro, con su resolución.
-- **ejercicios.md** — Ejercicios para practicar de forma autónoma y corregir en clase.
