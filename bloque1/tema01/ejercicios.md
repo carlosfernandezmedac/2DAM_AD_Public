@@ -29,4 +29,15 @@ Crea un programa en Java que copie una imagen de un lugar a otro, contando cuán
 
 8. Repite el ejercicio completo, pero cambiando `FileInputStream`/`FileOutputStream` por **`FileReader`**/**`FileWriter`**. **¿Se puede abrir la imagen copiada? ¿Por qué crees que pasa esto?**
 
+---
 
+## Ejercicio 3 — Modificar datos en un archivo de texto
+
+Crea un programa en Java que permita modificar el contenido de un archivo de texto llamado `datos.txt`, siguiendo estos pasos:
+
+1. Escribir el abecedario en el fichero mediante `FileWriter`.
+2. Pedir al usuario una **posición** (entero) del archivo donde quiere modificar.
+3. Pedir al usuario el **carácter** que quiere escribir en esa posición.
+4. Usar **`RandomAccessFile`** para posicionarse en esa posición y sobrescribir el contenido.
+5. Cerrar el archivo correctamente.
+6. Manejar las excepciones si el archivo no existe, la posición es inválida, o hay un error de lectura/escritura.

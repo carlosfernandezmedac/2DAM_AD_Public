@@ -202,14 +202,15 @@ public class Ejemplo6 {
     public static void main(String[] args) {
 
         try {
-            RandomAccessFile file = new RandomAccessFile("./TEMA01/Ejemplos/texto.txt", "rw");
+            RandomAccessFile file = new RandomAccessFile("./tema1/texto.txt", "rw");
             file.seek(5);
             long filePointer = file.getFilePointer();
+            System.out.println("Puntero ANTES de leer: " + file.getFilePointer()); // te dirá 5
             int unByte = file.read();
-
+            System.out.println("Puntero DESPUES de leer: " + file.getFilePointer()); // te dirá 6
             System.out.println((char) unByte);
-            System.out.println(filePointer);
-            file.write('X');
+            file.write('X'); //Escribirá la letra F
+            System.out.println("Puntero DESPUES de escribir: " + file.getFilePointer()); // te dirá 7
             file.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,7 +219,7 @@ public class Ejemplo6 {
 }
 ```
 
-> ⚠️ **Cuidado con esta trampa habitual:** `seek(5)` posiciona el puntero en el byte 5 (el carácter `'6'`, contando desde 0 en `123456789ñABCDEF`). Pero justo después se hace `read()`, que **también mueve el puntero** una posición hacia delante. Por eso el `write('X')` no sobrescribe el byte 5, sino el **byte 6** (el carácter `'7'`). Es un buen ejercicio para que el alumnado prediga el contenido final del fichero antes de ejecutarlo.
+> ⚠️ **Cuidado con esta trampa habitual:** `seek(5)` posiciona el puntero en el byte 5 (el carácter `'6'`, contando desde 0 en `123456789ABCDEF`). Pero justo después se hace `read()`, que **también mueve el puntero** una posición hacia delante. Por eso el `write('X')` no sobrescribe el byte 5, sino el **byte 6** (el carácter `'7'`). 
 
 ### Ejemplo 7 — Operaciones con buffer
 
