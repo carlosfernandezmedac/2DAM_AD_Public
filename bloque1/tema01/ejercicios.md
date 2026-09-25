@@ -47,9 +47,9 @@ Crea un programa en Java que permita modificar el contenido de un archivo de tex
 
 ## Ejercicio 4 — Copiar un fichero con buffers
 
-Crea un programa que copie el contenido de `archivo_origen.txt` en `archivo_destino.txt` usando **buffers**, para mejorar la eficiencia frente a una copia byte a byte. El programa debe:
+Crea un programa que copie el contenido de `foto.jpg` en `foto_copia_buffer.jpg` usando **buffers**, para mejorar la eficiencia frente a una copia byte a byte. El programa debe:
 
-1. Abrir `foto.jpg` en modo lectura y `foto_copia_buffer.jpg` en modo escritura (sobrescribiendo si ya existe).
+1. Abrir `foto.jpg` en modo lectura con BufferedInputStream  y `foto_copia_buffer.jpg` en modo escritura (sobrescribiendo si ya existe)usando BufferedOutputStream.
 2. Definir un buffer de lectura/escritura, por ejemplo de `1024` bytes.
 3. Mientras haya datos en el origen: leer un bloque en el buffer, escribirlo en el destino, y mostrar por consola un mensaje del tipo `Fin copia bloque N`.
 4. Al terminar, añadir al final un mensaje de "Copia finalizada correctamente."
@@ -57,5 +57,79 @@ Crea un programa que copie el contenido de `archivo_origen.txt` en `archivo_dest
 6. Controlar las excepciones si el fichero origen no existe o hay errores de E/S.
 
 
+---
+
+## Ejercicio 5 — Copiar un archivo binario (imagen)
+
+Copiar ficheros grandes (por ejemplo, un log de un servidor) es una tarea habitual. Este ejercicio compara, con datos reales, por qué se usa buffer en la práctica.
+1. Copia un fichero (usa uno que pese al menos varios MB — una imagen grande o un vídeo corto sirven) usando FileInputStream/FileOutputStream, leyendo byte a byte (sin buffer).
+2. Copia el mismo fichero, pero usando BufferedInputStream/BufferedOutputStream, leyendo con un array de 4096 bytes.
+3. En los dos casos, mide el tiempo que tarda la copia con System.currentTimeMillis() (antes y después de copiar, y calculando la diferencia).
+4. Compara los tiempos por consola y comprueba que el tamaño de las dos copias coincide con el original.
 
 
+---
+
+
+## Ejercicio 6 — Reserva de asientos de cine (RandomAccessFile)
+
+Contexto: el fichero asientos.txt ya existe y contiene 20 caracteres L seguidos, uno por cada asiento de la sala (asientos numerados del 0 al 19, todos libres):
+
+LLLLLLLLLLLLLLLLLLLL
+
+1. Pide al usuario el número de asiento que quiere comprar (0-19).
+2. Si el número está fuera de ese rango, avisa de que ese asiento no existe/no está disponible.
+3. Si el asiento existe, comprueba su estado actual: si ya está comprado (C), avisa de que ya está ocupado; si está libre (L), cámbialo a C usando RandomAccessFile.
+4. Cierra el fichero.
+5. Maneja la excepción si se produce un error de lectura/escritura.
+
+---
+
+## Ejercicio 7 — Consultar un rango de asientos de golpe (RandomAccessFile + bloque)
+
+Seguimos con asientos.txt (20 caracteres, L o C, uno por asiento). En vez de consultar los asientos uno a uno, queremos consultar de golpe un rango completo — por ejemplo, para mostrar en pantalla "la fila A" (asientos 5 al 9) sin hacer 5 lecturas sueltas.
+
+1. Pide al usuario la posición inicial del rango que quiere consultar (por ejemplo, 5).
+2. Pide al usuario cuántos asientos quiere consultar a partir de ahí (por ejemplo, 5, para ver del 5 al 9).
+3. Usa RandomAccessFile para saltar (seek) a la posición inicial, y leer ese rango de golpe en un array de bytes (read(array, 0, cantidad)).
+4. Muestra por consola el estado de esos asientos, indicando el número de cada uno junto a su estado (L o C).
+5. Cierra el fichero.
+6. Maneja la excepción si hay un error de lectura.
+
+---
+
+
+## Ejercicio 8 — Formulario de matriculación de alumnos
+
+iseña un programa que simule un formulario de matriculación de alumnos, con los siguientes campos:
+
+- **Nombre y Apellidos**
+- **Email**
+- **Fecha de Nacimiento**
+- **Género** (Masculino / Femenino)
+- **Titulación de Acceso** (FP Grado Medio / FP Grado Superior / Bachillerato)
+- **Observaciones**
+
+**Enunciado:**
+
+1. Al arrancar, el programa muestra un pequeño menú con dos opciones: **Guardar** e **Imprimir**.
+2. Si el usuario elige **Guardar**:
+   - Pide por teclado, con `Scanner`, todos los datos anteriores.
+   - Junta todos los datos recogidos en un único `String`, con este formato:
+
+```text
+----- Formulario de Matriculación -----
+Nombre y Apellidos: Juan Pérez García
+Email: juan.perez@gmail.com
+Fecha de Nacimiento: 12/04/2005
+Género: Masculino
+Titulación de Acceso: FP Grado Medio
+Observaciones:
+Interesado en horario de tarde.
+---------------------------------------
+```
+   - Escribe ese `String` en un fichero `matricula.txt`, usando `FileWriter`.
+3. Si el usuario elige **Imprimir**:
+   - No pide ningún dato nuevo.
+   - Lee el contenido de `matricula.txt` (usando `FileReader`) y lo muestra por pantalla.
+4. Maneja las excepciones si hay un error de lectura/escritura.

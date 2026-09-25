@@ -275,16 +275,24 @@ Disco → 1 byte → Programa                          Programa lee de memoria
 > 💡 El acceso a memoria es muchísimo más rápido que a disco. Por eso, cuantos menos "viajes" a disco haga el programa, mejor rendimiento.
 
 ```java
-int bufferSize = 4 * 1024;
-BufferedInputStream bufferedInputStream = new BufferedInputStream(
-        new FileInputStream("C:\\temp\\pruebas\\pruebas4.txt"),
-        bufferSize);
+int bufferSize = 4 * 1024; // 4 KB
+byte[] buffer = new byte[bufferSize];
 
-int info = bufferedInputStream.read();
-while (info != -1) {
-    info = bufferedInputStream.read();
+BufferedInputStream entrada = new BufferedInputStream(
+        new FileInputStream("origen.txt"), bufferSize);
+
+BufferedOutputStream salida = new BufferedOutputStream(
+        new FileOutputStream("destino.txt"), bufferSize);
+
+int bytesLeidos = entrada.read(buffer);
+
+while (bytesLeidos != -1) {
+    salida.write(buffer, 0, bytesLeidos);
+    bytesLeidos = entrada.read(buffer);
 }
-bufferedInputStream.close();
+
+entrada.close();
+salida.close();
 ```
 
 Un `BufferedInputStream` **envuelve** a otro stream (aquí, un `FileInputStream`); esto es un patrón habitual en `java.io` que reaparecerá en el Tema 2.
