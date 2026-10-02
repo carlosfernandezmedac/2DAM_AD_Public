@@ -111,7 +111,6 @@ try {
 | `exists()` | Comprueba si el fichero existe |
 | `canRead()` / `canWrite()` | Comprueban si puede leerse / escribirse |
 | `listFiles()` | Devuelve un array con los ficheros del directorio |
-| `lastModified()` | Devuelve última modificación |
 
 ---
 
@@ -147,7 +146,7 @@ ACCESO SECUENCIAL                    ACCESO ALEATORIO (DIRECTO)
 ### Lectura — `FileInputStream`
 
 ```java
-FileInputStream entrada = new FileInputStream("C:\\temp\\pruebas\\pruebas2.txt");
+InputStream entrada = new FileInputStream("C:\\temp\\pruebas\\pruebas2.txt");
 int data = entrada.read();   // devuelve el primer byte (como entero)
 entrada.close();
 ```
@@ -176,7 +175,7 @@ output.close();
 ### Lectura — `FileReader`
 
 ```java
-FileReader lector = new FileReader("C:\\temp\\pruebas\\pruebas2.txt");
+Reader lector = new FileReader("C:\\temp\\pruebas\\pruebas2.txt");
 int data = lector.read();
 System.out.println((char) data);
 lector.close();
@@ -187,7 +186,7 @@ Como `read()` devuelve un `int`, hay que hacer *casting* a `char` para visualiza
 ### Escritura — `FileWriter`
 
 ```java
-FileWriter escritorFicheros = new FileWriter("C:\\temp\\pruebas\\pruebas2.txt");
+Writer escritorFicheros = new FileWriter("C:\\temp\\pruebas\\pruebas2.txt");
 escritorFicheros.write("Esto es un ejemplo de escritura");
 escritorFicheros.close();
 ```
@@ -284,11 +283,10 @@ BufferedInputStream entrada = new BufferedInputStream(
 BufferedOutputStream salida = new BufferedOutputStream(
         new FileOutputStream("destino.txt"), bufferSize);
 
-int bytesLeidos = entrada.read(buffer);
+int bytesLeidos;
 
-while (bytesLeidos != -1) {
+while ((bytesLeidos = entrada.read(buffer)) != -1) {
     salida.write(buffer, 0, bytesLeidos);
-    bytesLeidos = entrada.read(buffer);
 }
 
 entrada.close();

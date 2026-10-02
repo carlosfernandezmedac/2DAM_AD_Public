@@ -92,17 +92,14 @@ Fichero de entrada `texto.txt`:
 123456789ABCDEF
 ```
 
+> ⚠️ NOTA: aquí la lectura y la escritura son dos operaciones INDEPENDIENTES, sobre archivos distintos y sin relación entre sí (se lee "texto.txt" y, por separado, se escribe un String fijo en "textow.txt"). Si el objetivo fuera COPIAR el contenido de un fichero a otro habría que leer y escribir dentro del MISMO bucle while.
+
 
 ```java
 import java.io.FileReader;
 import java.io.FileWriter;
 
 //Ejemplo: uso de FileReader y FileWriter
-//NOTA: aquí la lectura y la escritura son dos operaciones INDEPENDIENTES,
-//sobre archivos distintos y sin relación entre sí (se lee "texto.txt" y,
-//por separado, se escribe un String fijo en "textow.txt").
-//Si el objetivo fuera COPIAR el contenido de un fichero a otro,
-//habría que leer y escribir dentro del MISMO bucle while.
 
 public class Ejemplo4 {
 
@@ -136,8 +133,6 @@ public class Ejemplo4 {
     }
 }
 ```
-
-> ⚠️ **Punto interesante para clase:** al ejecutar este ejemplo, el fichero `textow.txt` resultante puede mostrar la "á" final como un carácter extraño (` `) en lugar de "á". Es el ejemplo real de lo que comentamos sobre bytes vs. caracteres: si el editor con el que abres luego el fichero no usa la misma codificación con la que `FileWriter` escribió (el *charset* por defecto de la plataforma), los caracteres multibyte se ven mal aunque el código sea correcto. 
 
 ### Ejemplo 5 — Lectura y escritura con bytes (`FileInputStream` / `FileOutputStream`)
 
@@ -177,10 +172,7 @@ public class Ejemplo5 {
             byte[] arrayBytes = cadena.getBytes();
 
             /*
-            Nota 💡: si en vez de un String estuviéramos copiando otro fichero (como una imagen),
-            NO haría falta este paso, porque fis.read() ya nos da directamente el byte (int),
-            y output.write(data) lo acepta tal cual, sin necesitar ningún getBytes().
-            getBytes() solo hace falta cuando el ORIGEN de los datos es un String en memoria.
+            Nota 💡: FileOutputStream escribe bytes, pero String contiene caracteres. Por eso, si queremos escribir un String en un fichero, primero debemos convertirlo a un array de bytes usando getBytes().
             */
 
             FileOutputStream output = new FileOutputStream(pathEscritura);
@@ -285,7 +277,7 @@ public class Ejemplo7 {
     public static void main(String[] args) {
 
         try {
-            int bufferSize = 12;
+            int bufferSize = 1024;
 
             BufferedInputStream bufferedInputStream = new BufferedInputStream(
                     new FileInputStream(".\\TEMA01\\Ejemplos\\Texto.txt"));
@@ -315,7 +307,7 @@ public class Ejemplo7 {
 }
 ```
 
-> 💡 Aquí `bufferSize` (12) se usa como tamaño del **array** que se pasa a `read(buffer)`, no como tamaño del buffer interno del `BufferedInputStream` (que en este ejemplo usa el tamaño por defecto, ya que no se pasa como segundo parámetro al constructor). Con `texto.txt` (17 bytes contando la `ñ` como 2 bytes en UTF-8), este código imprime **2 bloques**: uno de 12 bytes y otro con el resto.
+> 💡 El bufferSize indica el tamaño del array temporal que creamos para almacenar los datos que vamos leyendo del fichero. Por ejemplo, byte[] buffer = new byte[12] crea un array con 12 posiciones y read(buffer) va leyendo el fichero y guardando los bytes en ese array. La variable info indica cuántos bytes se han leído realmente en cada lectura, que puede ser menor que 12 en la última lectura.
 
 ---
 
@@ -384,12 +376,12 @@ import java.io.FileWriter;
 public class CopiarContenido {
     public static void main(String[] args) throws Exception {
         FileReader lector = new FileReader("origen.txt");
-        FileWriter escritor = new FileWriter("baseGeneral.txt", true); // true = append
+        FileWriter escritor = new FileWriter("baseGeneral.txt", true); // true = añadir al final del fichero
 
-        int data = lector.read();
-        while (data != -1) {
+        int data;
+        while ((data = lector.read()) != -1) {
             escritor.write(data);
-            data = lector.read();
+           
         }
 
         lector.close();
