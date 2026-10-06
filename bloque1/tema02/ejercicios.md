@@ -62,3 +62,47 @@
    Contenido de la línea número 3:
    Tercera línea
    ```
+
+---
+
+## Ejercicio 3 — Total de un ticket de compra
+
+**Utilidad real:** extraer importes de un texto sin parsearlo a mano.
+
+Dado el texto `"Pan 1.5 Leche 1 Huevos 2.25"` (producto seguido de su precio), calcula el **total** de la compra y muestra cada producto con su precio.
+
+
+**Salida:**
+```
+Pan: 1.5
+Leche: 1.0
+Huevos: 2.25
+TOTAL: 4.75
+```
+
+
+---
+
+## Ejercicio 4 — Buscar errores en un fichero de log
+
+**Utilidad real:** revisar un log del servidor y saber en qué líneas hay errores.
+
+Dado un fichero `servidor.log`:
+
+```
+2026-10-07 09:00:01 INFO Servidor iniciado
+2026-10-07 09:00:05 ERROR No se pudo conectar a la base de datos
+2026-10-07 09:01:10 INFO Reintentando conexion
+2026-10-07 09:01:12 ERROR Timeout
+2026-10-07 09:02:00 INFO Conexion establecida
+```
+
+Muestra las líneas que contienen `ERROR`, podéis usar una comparación `linea.contains("ERROR")`, indicando su número de línea, y al final cuántos errores hay.
+
+
+**Salida:**
+```
+Línea 2: 2026-10-07 09:00:05 ERROR No se pudo conectar a la base de datos
+Línea 4: 2026-10-07 09:01:12 ERROR Timeout
+Total de errores: 2
+```

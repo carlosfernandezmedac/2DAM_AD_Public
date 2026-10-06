@@ -15,7 +15,7 @@
 
 En el Tema 1 vimos las clases más básicas de `java.io`: `File`, `FileInputStream`/`FileOutputStream`, `FileReader`/`FileWriter` y las variantes `Buffered`. En este tema ampliamos el mapa: el paquete `java.io` tiene más clases de flujos ("streams"), cada una pensada para un caso de uso concreto.
 
-> 💡 **No todas pesan lo mismo en la práctica.** Este tema mezcla clases muy usadas en el día a día (`StreamTokenizer`, `LineNumberReader`, `DataInputStream`/`DataOutputStream`) con otras bastante específicas (tuberías, arrays) que rara vez aparecen fuera de casos muy concretos.
+> 💡 Este tema mezcla clases muy usadas en el día a día (`StreamTokenizer`, `LineNumberReader`, `DataInputStream`/`DataOutputStream`) con otras bastante específicas (tuberías, arrays) que rara vez aparecen fuera de casos muy concretos.
 
 Un **Stream** es una secuencia ordenada de información con un origen (entrada) o un destino (salida) — nunca ambos a la vez: son **unidireccionales**.
 
@@ -80,23 +80,19 @@ Es un `BufferedReader` que además **cuenta las líneas** que va leyendo. Empiez
 | Método | Qué hace |
 |---|---|
 | `getLineNumber()` | Devuelve el número de línea en la que se está leyendo actualmente |
-| `setLineNumber(int n)` | Fuerza el contador a la línea indicada (no mueve el puntero de lectura por sí solo) |
 | `readLine()` | Devuelve el contenido completo de la siguiente línea (`String`), o `null` si no hay más |
 
 ```java
 LineNumberReader lineNumberReader =
         new LineNumberReader(new FileReader("C:\\temp\\pruebas\\pruebas2.txt"));
 
-String line = lineNumberReader.readLine();
-while (line != null) {
+String line;
+while ((line = lineNumberReader.readLine()) != null) {
     System.out.println("Contenido de la línea número: " + lineNumberReader.getLineNumber());
     System.out.println(line);
-    line = lineNumberReader.readLine();
 }
 lineNumberReader.close();
 ```
-
-> ⚠️ **Cuidado con `setLineNumber()`**: cambia el valor que devuelve `getLineNumber()`, pero **no reposiciona el puntero de lectura** al principio de esa línea. Si quieres saltar directamente a una línea concreta sin leer las anteriores, `LineNumberReader` no lo permite por sí solo — tendrás que combinarlo con lógica propia (ver el Ejercicio 2 del tema, con sus dos soluciones distintas).
 
 ---
 

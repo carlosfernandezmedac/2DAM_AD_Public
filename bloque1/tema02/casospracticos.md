@@ -2,9 +2,6 @@
 
 ---
 
-## Ejemplos guiados
-
-
 ### Ejemplo 1 — StreamTokenizer
 
 Fichero de entrada `Ejemplo1.txt` (nótese que incluye líneas en blanco intermedias):
@@ -76,21 +73,19 @@ public class Ejemplo2 {
 
         try {
             LineNumberReader lineNumberReader = new LineNumberReader(new FileReader(".\\TEMA02\\Ejemplos\\Ejemplo2.txt"));
-            String line = lineNumberReader.readLine();
-            while(line != null) {
+            String line;
+            while((line = lineNumberReader.readLine()) != null) {
                 System.out.println("Contenido de la linea numero:"+ lineNumberReader.getLineNumber());
                 System.out.println(line);
-                line = lineNumberReader.readLine();
             }
                 lineNumberReader.close();
+
             } catch (IOException e) {
             e.printStackTrace();
             }
     }
 }
 ```
-
-> 💡 Comparado con el `Ejemplo4`, aquí es mucho más simple contar líneas y acceder a su contenido completo — `LineNumberReader` está pensado justo para eso, mientras que `StreamTokenizer` está pensado para diferenciar palabras de números dentro del contenido.
 
 ---
 
@@ -141,7 +136,7 @@ public class Ejemplo3 {
 }
 ```
 
-> ⚠️ **Errores intencionados para detectar en clase:** este ejemplo tiene dos fallos típicos de `DataInputStream`:
+> ⚠️ **Errores intencionados para detectar:** este ejemplo tiene dos fallos típicos de `DataInputStream`:
 > 1. Se escriben 5 valores (`int`, `int`, `float`, `long`, `double`) pero se leen en **orden distinto** (`int`, `int`, `float`, `double`, `long`) — al leer el `double` en la posición donde en realidad hay un `long` escrito, el valor obtenido será basura sin sentido (no lanza excepción, simplemente da un resultado incorrecto).
 
 ---
