@@ -27,7 +27,8 @@ Un **Stream** es una secuencia ordenada de información con un origen (entrada) 
 
 Según lo que traten, los Streams de `java.io` se agrupan así:
 
-
+|  | Interpretación |
+|---|---|
 | **StreamTokenizer** | Distingue palabras de números |
 | **LineNumberReader**  | Sabe en qué línea estás |
 | **DataOutputStream**  | Entiende tipos (`int`, `float`...), no solo bytes sueltos |
