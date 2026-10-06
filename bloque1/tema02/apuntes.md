@@ -19,19 +19,18 @@ En el Tema 1 vimos las clases más básicas de `java.io`: `File`, `FileInputStre
 
 Un **Stream** es una secuencia ordenada de información con un origen (entrada) o un destino (salida) — nunca ambos a la vez: son **unidireccionales**.
 
-La diferencia con el Tema 1: las clases del Tema 1 (FileReader, FileInputStream...) solo transportan datos en bruto — bytes o caracteres sueltos, sin entender nada de su significado. Estas tres clases del Tema 2 añaden una capa de interpretación
+> La diferencia con el Tema 1: las clases del Tema 1 (FileReader, FileInputStream...) solo transportan datos en bruto — bytes o caracteres sueltos, sin entender nada de su significado. Estas tres clases del Tema 2 añaden una capa de interpretación
+
 ---
 
 ## 2. Definición y tipos de Streams
 
 Según lo que traten, los Streams de `java.io` se agrupan así:
 
-| | Tema 1 | Tema 2 (estas 3) |
-|---|---|---|
-| **Qué hacen** | Mover bytes/caracteres tal cual | Interpretar/estructurar esos datos |
-| **StreamTokenizer** | — | Distingue palabras de números |
-| **LineNumberReader** | — | Sabe en qué línea estás |
-| **DataOutputStream** | — | Entiende tipos (`int`, `float`...), no solo bytes sueltos |
+
+| **StreamTokenizer** | Distingue palabras de números |
+| **LineNumberReader**  | Sabe en qué línea estás |
+| **DataOutputStream**  | Entiende tipos (`int`, `float`...), no solo bytes sueltos |
 
 
 ---
