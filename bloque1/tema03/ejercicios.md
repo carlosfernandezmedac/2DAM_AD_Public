@@ -28,3 +28,23 @@ Biblioteca: BIBLIOTECA JARDIN DE MALAGA (Málaga)
 Total de libros: 2
 ```
 
+---
+
+# Ejercicio 2 — Mi propio XML: recorrer varios nodos con DOM
+
+**Objetivo:** Crear tu propio fichero XML sobre una temática a tu elección y practicar la navegación del árbol DOM recorriendo **varios niveles de nodos** (igual que en el ejercicio de las bibliotecas).
+
+### Instrucciones
+
+1. **Crea un fichero XML propio** (por ejemplo `mi_fichero.xml`) sobre la temática que quieras: videojuegos, películas, equipos de fútbol, recetas, instituto con alumnos y asignaturas, tienda con productos, etc. Debe cumplir:
+   - Un **elemento raíz**.
+   - Al menos **2 elementos del primer nivel** (como las `library` del ejemplo), cada uno con **al menos un atributo** (como `location`).
+   - Dentro de cada uno, **al menos 2 elementos hijos** (como los `book`), y dentro de ellos **al menos 3 elementos con texto** (como `title`, `author`, `year`).
+
+2. **Escribe un programa Java con DOM**  que recorra el fichero y muestre **por consola**, para cada elemento del primer nivel:
+   1. Su **nombre o atributo** identificativo.
+   2. Los **datos de cada hijo** que contiene (todos los campos con texto).
+   3. El **número total de hijos** que tiene.
+
+3. Al final del programa, muestra un **resumen global** (por ejemplo, el total de elementos recorridos en todo el fichero).
+
