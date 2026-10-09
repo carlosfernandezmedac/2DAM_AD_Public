@@ -218,4 +218,73 @@ public class parserSAX {
 
 ---
 
+## Ejemplo 4 — Excepción checked (`IOException`)
+
+```java
+package Excepciones;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Ejemplo1checkedExceptions {
+    public static void main(String[] args) {
+         try {
+            FileReader file = new FileReader("archivo.txt");
+            // Realizar operaciones de lectura en el archivo
+
+        } catch (IOException e) {
+            System.out.println("Error de lectura: " + e.getMessage());
+        }
+    }
+}
+```
+
+> 💡 `FileReader` lanza `FileNotFoundException`, que es subclase de `IOException`. Al capturar `IOException` se captura también cualquier `FileNotFoundException`. Es **checked**: si se quita el `try/catch`, el código no compila.
+
+---
+
+### Ejemplo 4a — Cerrar el fichero 
+
+Ejemplo 4b — Cerrar el fichero
+
+Mismo programa que el Ejemplo 4, pero leyendo el fichero y cerrándolo. 
+
+```java
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Ejemplo4a {
+    public static void main(String[] args) {
+        try {
+            FileReader file = new FileReader("archivo.txt");
+            int c;
+            while ((c = file.read()) != -1) {
+                System.out.print((char) c);
+            }
+            file.close();                               
+        } catch (IOException e) {
+            System.out.println("Error de lectura: " + e.getMessage());
+        }
+    }
+}
+```
+
+### Ejemplo 4b — Cerrar el fichero:  con el fichero entre paréntesis después del try (no hace close())
+
+```java
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Ejemplo4b {
+    public static void main(String[] args) {
+        try (FileReader file = new FileReader("archivo.txt")) {
+            int c;
+            while ((c = file.read()) != -1) {
+                System.out.print((char) c);
+            }
+        } catch (IOException e) {
+            System.out.println("Error de lectura: " + e.getMessage());
+        }
+    }
+}
+
 
