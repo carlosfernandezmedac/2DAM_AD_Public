@@ -1,22 +1,18 @@
 # Ejercicios — 3. Trabajo con Ficheros XML
 
-> Ejercicios para que el alumnado los resuelva de forma autónoma. Las soluciones están plegadas para su corrección posterior en clase.
->
-> Ambos ejercicios usan el `fichero.xml` de bibliotecas y libros (ver `casos.md`).
-
 ---
 
 ## Ejercicio 1 — Mostrar el catálogo de bibliotecas con DOM
 
-**Objetivo:** Practicar la navegación de un árbol DOM ya cargado en memoria, sin usar XPath.
+**Objetivo:** Practicar la navegación de un árbol DOM ya cargado en memoria-
 
 ### Instrucciones
 
-Partiendo de `fichero.xml`, escribe un programa Java que, usando **DOM** (`DocumentBuilder`, `Document`, `NodeList`, `Element`... — sin XPath), muestre por consola, para cada biblioteca:
+Partiendo de `fichero.xml`, escribe un programa Java que, usando **DOM** (`DocumentBuilder`, `Document`, `NodeList`, `Element`...), muestre por consola, para cada biblioteca:
 
 1. El **nombre** de la biblioteca y su **ubicación** (atributo `location`).
 2. El **título**, **autor** y **año** de cada libro que contiene.
-3. El **número total de libros** de esa biblioteca (contando también los duplicados, tal cual aparecen en el XML).
+3. El **número total de libros** de esa biblioteca..
 
 Formato de salida esperado (ejemplo):
 
