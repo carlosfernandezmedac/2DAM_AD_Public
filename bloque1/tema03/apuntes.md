@@ -1,4 +1,4 @@
-# Tema 3 — Trabajo con Ficheros XML
+# Tema 3 — Trabajo con Ficheros XML y Excepciones
 
 ---
 
@@ -18,7 +18,7 @@
 
 En este tema damos un salto: en vez de leer ficheros "planos" byte a byte o carácter a carácter, vamos a leer ficheros **estructurados** (XML) e interpretarlos como un árbol de datos con significado. Es la antesala directa de trabajar con JSON, con APIs REST, o con cualquier formato de intercambio de datos.
 
-> 💡 **Dónde poner el foco:** de este tema, lo verdaderamente importante es (1) saber elegir entre **DOM y SAX** según el caso, y (2) el **manejo de excepciones**, que no es exclusivo de XML — es una base que vas a usar en el resto del curso. JUnit se ve aquí solo como introducción; no hace falta profundizar todavía.
+> 💡 **Dónde poner el foco:** de este tema, lo verdaderamente importante es (1) saber elegir entre **DOM y SAX** según el caso, y (2) el **manejo de excepciones** que vas a usar en el resto del curso. 
 
 ---
 
@@ -205,7 +205,12 @@ TEMA 3 — FICHEROS XML
    └── Error         → casi nunca solucionable en código          → StackOverflowError...
 
    try { … } catch (Tipo e) { … } finally { … }
+ 
 ```
 
+---
 
+## Recursos
 
+- 📖 Documentación oficial: [SAX parsing](https://docs.oracle.com/javase/tutorial/jaxp/sax/parsing.html)
+- 📖 Documentación oficial: [java.lang.Exception](https://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html)

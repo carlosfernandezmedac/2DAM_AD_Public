@@ -55,8 +55,6 @@ Todos los ejemplos de DOM/SAX/XPath usan este `fichero.xml` de partida:
 </libraries>
 ```
 
-> 💡 Fíjate en que el primer libro de la biblioteca de Jaén ("El Gran Gatsby") aparece **repetido**: es útil para plantear en clase preguntas como "¿cuántos libros distintos hay realmente en Jaén?".
-
 ---
 
 ## Ejemplos guiados
@@ -238,15 +236,8 @@ public class Ejemplo1checkedExceptions {
 }
 ```
 
-> 💡 `FileReader` lanza `FileNotFoundException`, que es subclase de `IOException`. Al capturar `IOException` se captura también cualquier `FileNotFoundException`. Es **checked**: si se quita el `try/catch`, el código no compila.
 
----
-
-### Ejemplo 4a — Cerrar el fichero 
-
-Ejemplo 4b — Cerrar el fichero
-
-Mismo programa que el Ejemplo 4, pero leyendo el fichero y cerrándolo. 
+Mismo programa, pero leyendo el fichero y cerrándolo. 
 
 ```java
 import java.io.FileReader;
@@ -268,13 +259,122 @@ public class Ejemplo4a {
 }
 ```
 
-### Ejemplo 4b — Cerrar el fichero:  con el fichero entre paréntesis después del try (no hace close())
+> 💡 `FileReader` lanza `FileNotFoundException`, que es subclase de `IOException`. Al capturar `IOException` se captura también cualquier `FileNotFoundException`. Es **checked**: si se quita el `try/catch`, el código no compila.
+
+---
+
+## Ejemplo 4a — Los arreglos rápidos de VS Code: ¿cuál conviene?
+
+**Planteamiento:** Estás escribiendo en VS Code esta línea para abrir un fichero:
+
+```java
+FileReader file = new FileReader("archivo.txt");
+```
+
+La línea sale **subrayada en rojo**. Al pasar el ratón por encima aparece la bombilla 💡 con una **Corrección rápida** que ofrece, entre otras, estas dos opciones:
+
+- **Add throws declaration**
+- **Surround with try/catch**
+
+**Nudo:** Las dos hacen que el programa compile, pero **no hacen lo mismo**. ¿Qué genera cada una? ¿Cierra el fichero alguna de ellas? ¿Cuál es la forma correcta?
+
+Fichero de entrada `archivo.txt`:
+```
+Hola mundo
+```
+
+---
+
+### Opción 1 — "Surround with try/catch"
+
+VS Code envuelve la línea así:
+
+```java
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+public class Opcion1 {
+    public static void main(String[] args) {
+        try {
+            FileReader file = new FileReader("archivo.txt");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+> ⚠️ El error **se trata**, pero el fichero **no va entre paréntesis**: **no se cierra solo**. Habría que cerrarlo tú con `close()`, y ahí aparece el problema de qué pasa si algo falla antes de llegar a él.
+>
+> Además, VS Code pone `FileNotFoundException` porque mira **solo esa línea**. En cuanto añadas `file.read()` dentro del `try`, el compilador pedirá `IOException`.
+
+---
+
+### Opción 2 — "Add throws declaration"
+
+VS Code **no trata el error**: lo declara en la cabecera de `main`.
 
 ```java
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Ejemplo4b {
+public class Opcion2 {
+    public static void main(String[] args) throws IOException {
+        FileReader file = new FileReader("archivo.txt");
+    }
+}
+```
+
+> ⚠️ `throws` no trata nada ni cierra nada: **lo pasa a quien llamó al método**. 
+>
+> Si el `throws` estuviera en otro método (por ejemplo `leerFichero()`), el error **volvería a quien lo llamó**, que puede ser `main`, y ahí sí se podría tratar con `try/catch`.
+
+Aquí es donde `throws` tiene sentido: un método **avisa** de que puede fallar y **quien lo llama** decide qué hacer. Ahora `leerFichero` lleva el `throws` y es `main` quien trata el error:
+
+```java
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Opcion2b {
+
+    // Este método NO trata el error: lo pasa a quien lo llame
+    static void leerFichero(String ruta) throws IOException {
+        FileReader file = new FileReader(ruta);
+        System.out.println("Fichero abierto: " + ruta);
+        file.close();
+    }
+
+    public static void main(String[] args) {
+        try {
+            leerFichero("archivo.txt");
+            leerFichero("no_existe.txt");
+            System.out.println("Esta línea no se ejecuta");
+        } catch (IOException e) {
+            System.out.println("Error tratado en main: " + e.getMessage());
+        }
+        System.out.println("El programa sigue");
+    }
+}
+```
+
+**Salida:**
+```text
+Fichero abierto: archivo.txt
+Error tratado en main: no_existe.txt (No such file or directory)
+El programa sigue
+```
+---
+
+### Opción 3 — La forma correcta: el fichero entre paréntesis
+
+**Esta no la genera VS Code**: la escribes tú, moviendo la declaración al paréntesis que va justo después del `try`.
+
+```java
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Opcion3 {
     public static void main(String[] args) {
         try (FileReader file = new FileReader("archivo.txt")) {
             int c;
@@ -286,5 +386,132 @@ public class Ejemplo4b {
         }
     }
 }
+```
 
 
+> 💡 El fichero se cierra **solo** al terminar el `try`, haya error o no. No hace falta `close()` ni `finally`. Y el `catch` es `IOException`, que cubre tanto el fallo al abrir como los de lectura.
+
+---
+
+### Comparación
+
+| | Surround with try/catch | Add throws declaration | Fichero entre paréntesis |
+|---|---|---|---|
+| ¿Trata el error? | ✅ | ❌ lo pasa hacia arriba | ✅ |
+| ¿Cierra el fichero? | ❌ | ❌ | ✅ |
+| ¿Si falla el programa sigue? | ✅ | ❌ se para | ✅ |
+| ¿Lo genera VS Code? | ✅ | ✅ | ❌ lo escribes tú |
+
+
+--- 
+
+### Ejemplo 5 — Excepción unchecked (`ArrayIndexOutOfBoundsException`)
+
+```java
+package Excepciones;
+
+public class Ejemplo2UncheckedException1 {
+    public static void main(String[] args) {
+        int[] numbers = {1, 2, 3};
+        System.out.println(numbers[5]); // Esto lanza un ArrayIndexOutOfBoundsException
+        System.out.println("Ocurrió una ArrayIndexOutOfBoundsException: Índice fuera de rango.");
+    }
+}
+```
+
+> ⚠️ Este código **compila perfectamente** (a diferencia del Ejemplo 4), porque `ArrayIndexOutOfBoundsException` es *unchecked*. Pero **falla en tiempo de ejecución**: el `System.out.println("Ocurrió...")` nunca llega a ejecutarse, porque el programa se detiene en cuanto se lanza la excepción no capturada. 
+
+---
+
+### Ejemplo 6 — Excepción unchecked (`NullPointerException`)
+
+```java
+package Excepciones;
+
+public class Ejemplo2uncheckedexceptions2 {
+    public static void main(String[] args) {
+        String texto = null;
+        int longitud = texto.length();
+        System.out.println(longitud);
+
+        System.out.println("El programa no continúa su ejecución normalmente.");
+    }
+}
+```
+
+> 💡 Mismo patrón que el ejemplo anterior: llamar a un método (`.length()`) sobre una referencia `null` lanza `NullPointerException` en tiempo de ejecución, sin avisar en compilación.
+
+---
+
+### Ejemplo 7 — try/catch/finally y métodos de la excepción (`ArithmeticException`)
+
+```java
+package Excepciones;
+
+public class Ejemplo4ArithmeticException  {
+    public static void main(String[] args) {
+
+        int dividendo = 10;
+        int divisor = 0;
+
+        try {
+            int resultado = dividendo / divisor;
+            System.out.println(resultado);
+        } catch (ArithmeticException e) {
+            System.out.println("Error aritmético: " + e.getMessage());
+            System.out.println("No se ejecuta");
+       } finally{
+        System.out.println("Bloque finally ejecutado (cierro recursos).");
+       }
+    }
+}
+```
+
+> 💡 Buen ejemplo para practicar en clase, descomentando por turnos las llamadas a `e.getCause()`, `e.toString()`, `e.printStackTrace()` y `e.getStackTrace()` que aparecen comentadas en el original, y comprobar qué imprime cada una.
+>
+> Fíjate también en que el `finally` se ejecuta **siempre**, tanto si hay excepción como si no — es el bloque adecuado para cerrar ficheros, conexiones, etc.
+
+---
+
+### Ejemplo 7b — Ver qué devuelve cada método de la excepción
+
+```java
+public class ThrowableExample {
+    public static void main(String[] args) {
+        try {
+            int resultado = dividir(10, 0);
+            System.out.println("Resultado: " + resultado);       // no se ejecuta
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Información de la excepción: " + e.toString());
+            System.out.println("Pila de llamadas:");
+            e.printStackTrace();
+            for (StackTraceElement element : e.getStackTrace()) {
+                System.out.println("Elemento de la pila: " + element);
+            }
+        }
+    }
+
+    public static int dividir(int dividendo, int divisor) {
+        return dividendo / divisor;
+    }
+}
+
+```
+
+### Ejemplo 8 — Error (`StackOverflowError`)
+
+```java
+package Excepciones;
+
+public class Ejemplo3StackOverflowError {
+    public static void main(String[] args) {
+            recursiveFunction();
+    }
+            public static void recursiveFunction() {
+            recursiveFunction();
+        }
+    }
+```
+
+> ⚠️ **No es una excepción, es un `Error`.** La recursión sin caso base agota la pila de llamadas. A diferencia de las excepciones, los `Error` normalmente **no se intentan capturar**, porque casi nunca hay nada razonable que hacer en el `catch` — la solución real es corregir el código (aquí, añadir una condición de parada a la recursión).
