@@ -10,7 +10,6 @@
 4. [Parser SAX en Java](#4-parser-sax-en-java)
 5. [Procesamiento de XML: XPath](#5-procesamiento-de-xml-xpath)
 6. [Excepciones](#6-excepciones)
-7. [Pruebas unitarias: JUnit (introducción)](#7-pruebas-unitarias-junit-introducción)
 
 ---
 

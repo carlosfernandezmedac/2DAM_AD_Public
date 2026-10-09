@@ -6,6 +6,6 @@
 
 - [**Tema 1:** Introducción al manejo de ficheros](tema01/apuntes.md)
 - [**Tema 2:** Flujos](tema02/apuntes.md)
-- [**Tema 3:** Trabajo con ficheros XML](tema03/apuntes.md)
+- [**Tema 3:** Trabajo con ficheros XML y Excepciones](tema03/apuntes.md)
 
 

@@ -1,4 +1,4 @@
-# Casos Prácticos — 3. Trabajo con Ficheros XML
+# Casos Prácticos — 3. Trabajo con Ficheros XML y Excepciones
 
 Todos los ejemplos de DOM/SAX/XPath usan este `fichero.xml` de partida:
 
