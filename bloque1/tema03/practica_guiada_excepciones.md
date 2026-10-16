@@ -317,7 +317,7 @@ java.io.FileNotFoundException: no_existe.txt (No such file or directory)
 	at Paso5.main(Paso5.java:5)
 ```
 
-| Método | Qué devuelve | Aquí |
+| Método | Qué devuelve | Excepción capturada |
 |---|---|---|
 | `getMessage()` |  |  |
 | `getCause()` | | |
