@@ -156,9 +156,3 @@ TEMA 2 — FLUJOS
         DataInputStream.readInt()/readFloat()/readLong()...
         ⚠️ mismo orden y mismos tipos al leer que al escribir
 ```
-
----
-
-## Recursos
-
-- 📖 Documentación oficial: [Java IO (java.io)](https://docs.oracle.com/javase/8/docs/api/?java/io)
