@@ -207,9 +207,3 @@ TEMA 3 — FICHEROS XML
  
 ```
 
----
-
-## Recursos
-
-- 📖 Documentación oficial: [SAX parsing](https://docs.oracle.com/javase/tutorial/jaxp/sax/parsing.html)
-- 📖 Documentación oficial: [java.lang.Exception](https://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html)

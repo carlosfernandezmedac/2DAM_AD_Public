@@ -10,7 +10,6 @@
 4. [Consultas: SELECT, WHERE y ORDER BY](#5-consultas-select-where-y-order-by)
 5. [Repaso: consultas con JOIN](#2-repaso-consultas-con-join)
 6. [Gestión de transacciones](#6-gestión-de-transacciones)
-7. [La interfaz Statement](#7-la-interfaz-statement)
 
 ---
 
@@ -167,32 +166,6 @@ COMMIT;                            -- confirma ambos cambios
 
 ---
 
-## 7. La interfaz Statement
-
-`Statement` es la interfaz que ejecuta las sentencias SQL desde Java y recoge los resultados. Se obtiene a partir de una `Connection` (Tema 4).
-
-| Método | Para qué se usa | Qué devuelve |
-|---|---|---|
-| `executeQuery(String sql)` | Sentencias `SELECT` | Un objeto `ResultSet` con la información |
-| `executeUpdate(String sql)` | `INSERT`, `DELETE`, `UPDATE`... | Un `int` con el nº de filas afectadas |
-| `execute(String sql)` | Cualquiera de las dos anteriores | `true` si hay `ResultSet` (se obtiene con `getResultSet()`), `false` si no (se consulta `getUpdateCount()`) |
-
-```java
-Statement statement = dbConnection.createStatement();
-
-String selectSQL = "SELECT ID, USERNAME, NOMBRE FROM Usuarios";
-ResultSet rs = statement.executeQuery(selectSQL);
-
-while (rs.next()) {
-    System.out.println(rs.getString("USERNAME"));
-}
-
-String updateSQL = "UPDATE Usuarios SET NOMBRE = 'Ana' WHERE ID = 3";
-int filasAfectadas = statement.executeUpdate(updateSQL);
-System.out.println("Filas modificadas: " + filasAfectadas);
-```
-
----
 
 ## Resumen visual del tema
 
@@ -215,8 +188,4 @@ TEMA 6 — SENTENCIAS SQL
   REPASO: JOIN
    INNER JOIN → solo coincidencias · LEFT/RIGHT JOIN → tabla completa + NULLs
 
-  DESDE JAVA: Statement
-   executeQuery() → SELECT → ResultSet
-   executeUpdate() → INSERT/UPDATE/DELETE → int (filas afectadas)
-   execute() → cualquiera → boolean (hay ResultSet o no)
 ```

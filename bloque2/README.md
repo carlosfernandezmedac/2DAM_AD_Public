@@ -13,11 +13,10 @@
 ## ¿Qué vamos a ver en este bloque?
 
 ```
-Tema 6  ──►  El lenguaje SQL      → DDL, DML, SELECT, JOIN, transacciones, Statement
-Tema 4  ──►  El conector          → qué es, JDBC vs ODBC, tipos de driver, DriverManager
+Tema 6  ──►  El lenguaje SQL      → DDL, DML, SELECT, JOIN, transacciones
+Tema 4  ──►  El conector          → qué es, JDBC vs ODBC, tipos de driver, DriverManager, Statement
 Tema 5  ──►  El motor de BBDD     → embebida vs independiente, H2 + Spring Boot
 
 ```
 
 Primero repasamos **SQL** (Tema 6), después aprendemos a **conectar** Java con una base de datos y a lanzarle esas sentencias desde el código (Tema 4), y por último vemos las bases de datos **embebidas** y cómo elegir el motor según el proyecto (Tema 5).
-
