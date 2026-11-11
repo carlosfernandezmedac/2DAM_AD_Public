@@ -36,24 +36,24 @@ CREATE TABLE inscripcion (
 
 
 
-INSERT INTO monitor (id_monitor, nombre, telefono) VALUES
- (1, 'Laura Vidal',  '611111111'),
- (2, 'Pablo Ortega', '622222222'),
- (3, 'Marta Rey',    '633333333');
+INSERT INTO monitor (nombre, telefono) VALUES
+ ('Laura Vidal',  '611111111'),
+ ('Pablo Ortega', '622222222'),
+ ('Marta Rey',    '633333333');
 
-INSERT INTO socio (id_socio, nombre, ciudad, email, fecha_alta) VALUES
- (1, 'Ana Lopez',    'Malaga',   'ana@mail.com',   '2025-09-10'),
- (2, 'Berto Ruiz',   'Sevilla',  'berto@mail.com', '2025-11-05'),
- (3, 'Carla Gil',    'Malaga',   NULL,             '2026-01-15'),
- (4, 'David Sanz',   'Granada',  'david@mail.com', '2026-02-20'),
- (5, 'Elena Mora',   'Sevilla',  'elena@mail.com', '2026-03-12'),
- (6, 'Alberto Vega', 'Cordoba',  NULL,             '2026-05-30');
+INSERT INTO socio (nombre, ciudad, email, fecha_alta) VALUES
+ ('Ana Lopez',    'Malaga',   'ana@mail.com',   '2025-09-10'),
+ ('Berto Ruiz',   'Sevilla',  'berto@mail.com', '2025-11-05'),
+ ('Carla Gil',    'Malaga',   NULL,             '2026-01-15'),
+ ('David Sanz',   'Granada',  'david@mail.com', '2026-02-20'),
+ ('Elena Mora',   'Sevilla',  'elena@mail.com', '2026-03-12'),
+ ('Alberto Vega', 'Cordoba',  NULL,             '2026-05-30');
 
-INSERT INTO actividad (id_actividad, nombre, precio, plazas, dia, id_monitor) VALUES
- (1, 'Yoga',     15.00, 12, 'Lunes',  1),
- (2, 'Spinning', 20.00, 15, 'Martes', 2),
- (3, 'Pilates',  18.50, 10, 'Lunes',  1),
- (4, 'Boxeo',    25.00,  8, 'Jueves', 2);
+INSERT INTO actividad (nombre, precio, plazas, dia, id_monitor) VALUES
+ ('Yoga',     15.00, 12, 'Lunes',  1),
+ ('Spinning', 20.00, 15, 'Martes', 2),
+ ('Pilates',  18.50, 10, 'Lunes',  1),
+ ('Boxeo',    25.00,  8, 'Jueves', 2);
 
 INSERT INTO inscripcion (id_socio, id_actividad, fecha) VALUES
  (1, 1, '2026-09-01'),
